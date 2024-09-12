@@ -8,6 +8,8 @@ $ yarn install
 
 ```bash
 # development
+$ npx prisma migrate deploy
+$ npx prisma generate
 $ yarn run start
 
 # watch mode
