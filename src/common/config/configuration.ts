@@ -7,4 +7,8 @@ export default () => ({
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
   },
+  jwtSecret: process.env.JWT_SECRET,
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN,
+  jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
+  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
 });
