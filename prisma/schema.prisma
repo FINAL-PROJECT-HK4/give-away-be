@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TaskStatus {
+  active
+  inactive
+}
+
+enum UserTaskStatus {
+  init
+  ready
+  claimed
+}
+
+model TaskCategory {
+  id        String   @id @default(cuid())
+  name        String
+  minuteWait  Int
+  social      String?
+  createAt    DateTime   @default(now()) @map("create_at")
+  updateAt    DateTime   @default(now()) @map("create_update")
+  tasks       Task[]
+}
+
+model Task {
+  id        String   @id @default(cuid())
+  name           String
+  rewardPoint    Int           @default(0)
+  status         TaskStatus    @default(active)
+  idTaskCategory String     
+  createAt       DateTime      @default(now())
+  taskCategory   TaskCategory  @relation(fields: [idTaskCategory], references: [id])
+  userTasks      UserTask[]
+}
+
+model UserTask {
+  taskId         String
+  userTelegramId String
+  userInviteCode String
+  rewardPoint    Int           @default(0)
+  status         UserTaskStatus @default(init)
+
+  task           Task           @relation(fields: [taskId], references: [id])
+  user           User           @relation(fields: [userTelegramId, userInviteCode], references: [telegramId, inviteCode])
+
+  @@id([taskId, userTelegramId, userInviteCode])
+}
+
+model User {
+  telegramId    String
+  firstname     String
+  lastname      String
+  inviteCode    String
+  rewardPoint   Int          @default(0)
+  userTasks    UserTask[]
+
+  @@id([telegramId, inviteCode])
+}
