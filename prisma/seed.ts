@@ -1,157 +1,332 @@
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
 
 async function main() {
-  // Seed Task Categories
-  const taskCategories = await prisma.taskCategory.createMany({
+  // Seed User table
+  await prisma.user.createMany({
     data: [
-      { name: 'Category 1', minuteWait: 10, social: 'Facebook' },
-      { name: 'Category 2', minuteWait: 20, social: 'Twitter' },
-      { name: 'Category 3', minuteWait: 30, social: 'Instagram' },
-      { name: 'Category 4', minuteWait: 40, social: 'LinkedIn' },
-      { name: 'Category 5', minuteWait: 50, social: 'Snapchat' },
+      {
+        telegram_id: '1001',
+        user_name: 'John Doe',
+        invite_code: 'INV123',
+        reward_point: 500,
+      },
+      {
+        telegram_id: '1002',
+        user_name: 'Jane Smith',
+        invite_code: 'INV456',
+        reward_point: 300,
+      },
+      {
+        telegram_id: '1003',
+        user_name: 'Emily Johnson',
+        invite_code: 'INV789',
+        reward_point: 700,
+      },
+      {
+        telegram_id: '1004',
+        user_name: 'Michael Brown',
+        invite_code: 'INV101',
+        reward_point: 200,
+      },
+      {
+        telegram_id: '1005',
+        user_name: 'Sarah Davis',
+        invite_code: 'INV202',
+        reward_point: 150,
+      },
+      {
+        telegram_id: '1006',
+        user_name: 'Chris Wilson',
+        invite_code: 'INV303',
+        reward_point: 350,
+      },
+      {
+        telegram_id: '1007',
+        user_name: 'Patricia Lee',
+        invite_code: 'INV404',
+        reward_point: 450,
+      },
+      {
+        telegram_id: '1008',
+        user_name: 'Linda Taylor',
+        invite_code: 'INV505',
+        reward_point: 250,
+      },
+      {
+        telegram_id: '1009',
+        user_name: 'Barbara Anderson',
+        invite_code: 'INV606',
+        reward_point: 100,
+      },
+      {
+        telegram_id: '1010',
+        user_name: 'James Moore',
+        invite_code: 'INV707',
+        reward_point: 600,
+      },
     ],
   });
 
-  // Fetch created task categories
-  const category1 = await prisma.taskCategory.findFirst({
-    where: { name: 'Category 1' },
-  });
-  const category2 = await prisma.taskCategory.findFirst({
-    where: { name: 'Category 2' },
-  });
-  const category3 = await prisma.taskCategory.findFirst({
-    where: { name: 'Category 3' },
+  // Seed TaskCategory table
+  await prisma.taskCategory.createMany({
+    data: [
+      { id: 'cat1', name: 'Social Media', minute_wait: 15, social: 'Facebook' },
+      {
+        id: 'cat2',
+        name: 'Coding Challenges',
+        minute_wait: 30,
+        social: 'GitHub',
+      },
+      { id: 'cat3', name: 'Learning Modules', minute_wait: 60 },
+      { id: 'cat4', name: 'Marketing', minute_wait: 20, social: 'Instagram' },
+      { id: 'cat5', name: 'Support Tasks', minute_wait: 40 },
+    ],
   });
 
-  // Seed Tasks
-  const tasks = await prisma.task.createMany({
+  // Seed Task table
+  await prisma.task.createMany({
     data: [
       {
-        name: 'Task 1',
-        rewardPoint: 100,
+        id: 'task1',
+        name: 'Share Post on Facebook',
+        reward_point: 50,
         status: 'active',
-        idTaskCategory: category1?.id ?? '',
+        id_task_category: 'cat1',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
-        name: 'Task 2',
-        rewardPoint: 150,
+        id: 'task2',
+        name: 'Complete GitHub Issue',
+        reward_point: 100,
+        status: 'active',
+        id_task_category: 'cat2',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
+      },
+      {
+        id: 'task3',
+        name: 'Finish JavaScript Module',
+        reward_point: 150,
         status: 'inactive',
-        idTaskCategory: category2?.id ?? '',
+        id_task_category: 'cat3',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
-        name: 'Task 3',
-        rewardPoint: 200,
+        id: 'task4',
+        name: 'Retweet on Twitter',
+        reward_point: 50,
         status: 'active',
-        idTaskCategory: category3?.id ?? '',
+        id_task_category: 'cat1',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
-        name: 'Task 4',
-        rewardPoint: 250,
+        id: 'task5',
+        name: 'Instagram Story',
+        reward_point: 30,
+        status: 'active',
+        id_task_category: 'cat4',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
+      },
+      {
+        id: 'task6',
+        name: 'Resolve Support Ticket',
+        reward_point: 120,
+        status: 'active',
+        id_task_category: 'cat5',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
+      },
+      {
+        id: 'task7',
+        name: 'LinkedIn Post',
+        reward_point: 40,
         status: 'inactive',
-        idTaskCategory: category1?.id ?? '',
+        id_task_category: 'cat1',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
-        name: 'Task 5',
-        rewardPoint: 300,
+        id: 'task8',
+        name: 'GitHub PR Review',
+        reward_point: 90,
         status: 'active',
-        idTaskCategory: category2?.id ?? '',
+        id_task_category: 'cat2',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
+      },
+      {
+        id: 'task9',
+        name: 'Complete CSS Module',
+        reward_point: 80,
+        status: 'active',
+        id_task_category: 'cat3',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
+      },
+      {
+        id: 'task10',
+        name: 'Answer Support Query',
+        reward_point: 110,
+        status: 'inactive',
+        id_task_category: 'cat5',
+        icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
     ],
   });
 
-  // Seed Users
-  const users = await prisma.user.createMany({
+  // Seed UserTask table
+  await prisma.userTask.createMany({
     data: [
       {
-        telegramId: '12345',
-        firstname: 'John',
-        lastname: 'Doe',
-        inviteCode: 'ABCD123',
-        rewardPoint: 200,
-      },
-      {
-        telegramId: '67890',
-        firstname: 'Jane',
-        lastname: 'Smith',
-        inviteCode: 'XYZ987',
-        rewardPoint: 300,
-      },
-      {
-        telegramId: '54321',
-        firstname: 'Tom',
-        lastname: 'Brown',
-        inviteCode: 'LMNOP123',
-        rewardPoint: 150,
-      },
-      {
-        telegramId: '98765',
-        firstname: 'Alice',
-        lastname: 'Johnson',
-        inviteCode: 'QWERTY',
-        rewardPoint: 250,
-      },
-      {
-        telegramId: '24680',
-        firstname: 'Bob',
-        lastname: 'Miller',
-        inviteCode: 'ASDFG',
-        rewardPoint: 180,
-      },
-    ],
-  });
-
-  // Fetch created tasks and users
-  const task1 = await prisma.task.findFirst({ where: { name: 'Task 1' } });
-  const task2 = await prisma.task.findFirst({ where: { name: 'Task 2' } });
-  const task3 = await prisma.task.findFirst({ where: { name: 'Task 3' } });
-  const user1 = await prisma.user.findFirst({ where: { telegramId: '12345' } });
-  const user2 = await prisma.user.findFirst({ where: { telegramId: '67890' } });
-  const user3 = await prisma.user.findFirst({ where: { telegramId: '54321' } });
-
-  // Seed User Tasks
-  const userTasks = await prisma.userTask.createMany({
-    data: [
-      {
-        taskId: task1?.id ?? '',
-        userTelegramId: user1?.telegramId ?? '',
-        userInviteCode: user1?.inviteCode ?? '',
-        rewardPoint: 50,
-        status: 'ready',
-      },
-      {
-        taskId: task2?.id ?? '',
-        userTelegramId: user2?.telegramId ?? '',
-        userInviteCode: user2?.inviteCode ?? '',
-        rewardPoint: 75,
+        task_id: 'task1',
+        user_telegram_id: '1001',
+        user_invite_code: 'INV123',
+        reward_point: 50,
         status: 'claimed',
       },
       {
-        taskId: task3?.id ?? '',
-        userTelegramId: user3?.telegramId ?? '',
-        userInviteCode: user3?.inviteCode ?? '',
-        rewardPoint: 100,
+        task_id: 'task2',
+        user_telegram_id: '1002',
+        user_invite_code: 'INV456',
+        reward_point: 100,
         status: 'ready',
       },
       {
-        taskId: task1?.id ?? '',
-        userTelegramId: user2?.telegramId ?? '',
-        userInviteCode: user2?.inviteCode ?? '',
-        rewardPoint: 120,
+        task_id: 'task3',
+        user_telegram_id: '1003',
+        user_invite_code: 'INV789',
+        reward_point: 150,
+        status: 'init',
+      },
+      {
+        task_id: 'task4',
+        user_telegram_id: '1004',
+        user_invite_code: 'INV101',
+        reward_point: 50,
         status: 'claimed',
       },
       {
-        taskId: task2?.id ?? '',
-        userTelegramId: user1?.telegramId ?? '',
-        userInviteCode: user1?.inviteCode ?? '',
-        rewardPoint: 200,
+        task_id: 'task5',
+        user_telegram_id: '1005',
+        user_invite_code: 'INV202',
+        reward_point: 30,
+        status: 'ready',
+      },
+      {
+        task_id: 'task6',
+        user_telegram_id: '1006',
+        user_invite_code: 'INV303',
+        reward_point: 120,
+        status: 'claimed',
+      },
+      {
+        task_id: 'task7',
+        user_telegram_id: '1007',
+        user_invite_code: 'INV404',
+        reward_point: 40,
+        status: 'init',
+      },
+      {
+        task_id: 'task8',
+        user_telegram_id: '1008',
+        user_invite_code: 'INV505',
+        reward_point: 90,
+        status: 'ready',
+      },
+      {
+        task_id: 'task9',
+        user_telegram_id: '1009',
+        user_invite_code: 'INV606',
+        reward_point: 80,
+        status: 'claimed',
+      },
+      {
+        task_id: 'task10',
+        user_telegram_id: '1010',
+        user_invite_code: 'INV707',
+        reward_point: 110,
         status: 'ready',
       },
     ],
   });
 
-  console.log('Data seeded successfully.');
+  // Seed ReferralInvitations table
+  await prisma.referralInvitations.createMany({
+    data: [
+      { user_id: '1001', invited_user: 'friend1', invite_code: 'INV123' },
+      { user_id: '1002', invited_user: 'friend2', invite_code: 'INV456' },
+      { user_id: '1003', invited_user: 'friend3', invite_code: 'INV789' },
+      { user_id: '1004', invited_user: 'friend4', invite_code: 'INV101' },
+      { user_id: '1005', invited_user: 'friend5', invite_code: 'INV202' },
+      { user_id: '1006', invited_user: 'friend6', invite_code: 'INV303' },
+      { user_id: '1007', invited_user: 'friend7', invite_code: 'INV404' },
+      { user_id: '1008', invited_user: 'friend8', invite_code: 'INV505' },
+      { user_id: '1009', invited_user: 'friend9', invite_code: 'INV606' },
+      { user_id: '1010', invited_user: 'friend10', invite_code: 'INV707' },
+    ],
+  });
+
+  // Seed DailyCheckin table
+  await prisma.dailyCheckin.createMany({
+    data: [
+      {
+        user_id: '1001',
+        checkin_date: new Date(),
+        consecutive_days: 3,
+        reward_points: 150,
+      },
+      {
+        user_id: '1002',
+        checkin_date: new Date(),
+        consecutive_days: 5,
+        reward_points: 250,
+      },
+      {
+        user_id: '1003',
+        checkin_date: new Date(),
+        consecutive_days: 1,
+        reward_points: 50,
+      },
+      {
+        user_id: '1004',
+        checkin_date: new Date(),
+        consecutive_days: 2,
+        reward_points: 100,
+      },
+      {
+        user_id: '1005',
+        checkin_date: new Date(),
+        consecutive_days: 4,
+        reward_points: 200,
+      },
+      {
+        user_id: '1006',
+        checkin_date: new Date(),
+        consecutive_days: 6,
+        reward_points: 300,
+      },
+      {
+        user_id: '1007',
+        checkin_date: new Date(),
+        consecutive_days: 1,
+        reward_points: 50,
+      },
+      {
+        user_id: '1008',
+        checkin_date: new Date(),
+        consecutive_days: 7,
+        reward_points: 350,
+      },
+      {
+        user_id: '1009',
+        checkin_date: new Date(),
+        consecutive_days: 3,
+        reward_points: 150,
+      },
+      {
+        user_id: '1010',
+        checkin_date: new Date(),
+        consecutive_days: 5,
+        reward_points: 250,
+      },
+    ],
+  });
 }
 
 main()

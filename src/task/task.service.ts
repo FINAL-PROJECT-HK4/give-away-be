@@ -9,7 +9,7 @@ export class TaskService {
 
   private async ensureUserExists(telegramId: string) {
     const user = await this.prisma.user.findFirst({
-      where: { telegramId },
+      where: { telegram_id: telegramId },
     });
     if (!user) {
       throw new NotFoundException(ERROR_MESSAGES.USER_NOT_FOUND);
@@ -24,13 +24,17 @@ export class TaskService {
   async getTasksAndStatus(telegramId: string) {
     await this.ensureUserExists(telegramId);
 
-    const tasksData = await this.prisma.task.findMany({});
+    const tasksData = await this.prisma.task.findMany({
+      include: {
+        task_category: true,
+      },
+    });
     const userTasks = await this.prisma.userTask.findMany({
-      where: { userTelegramId: telegramId },
+      where: { user_telegram_id: telegramId },
     });
 
     const tasksStatus = tasksData.map((task) => {
-      const exists = userTasks.find((userTask) => userTask.taskId === task.id);
+      const exists = userTasks.find((userTask) => userTask.task_id === task.id);
       const newTask = exists
         ? { ...task, status: exists.status }
         : { ...task, status: taskStatus.INIT };
@@ -46,8 +50,8 @@ export class TaskService {
 
     const response = await this.prisma.userTask.updateMany({
       where: {
-        userTelegramId: telegramId,
-        taskId: taskId,
+        user_telegram_id: telegramId,
+        task_id: taskId,
       },
       data: {
         status: 'claimed',
