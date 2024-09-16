@@ -26,4 +26,11 @@ export class TaskController {
 
     return this.taskService.claimTask(telegramId, taskId);
   }
+
+  @Post('task/start')
+  async startTask(@Body() data: any) {
+    const { telegramId, taskId, point } = data;
+
+    return this.taskService.startTask(telegramId, taskId, point);
+  }
 }

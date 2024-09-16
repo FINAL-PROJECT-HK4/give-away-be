@@ -8,7 +8,7 @@ CREATE TYPE "UserTaskStatus" AS ENUM ('init', 'ready', 'claimed');
 CREATE TABLE "TaskCategory" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "minute_wait" INTEGER NOT NULL,
+    "seconds_wait" INTEGER NOT NULL,
     "social" TEXT,
     "create_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "create_update" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -31,13 +31,13 @@ CREATE TABLE "Task" (
 
 -- CreateTable
 CREATE TABLE "UserTask" (
+    "id" TEXT NOT NULL,
     "task_id" TEXT NOT NULL,
     "user_telegram_id" TEXT NOT NULL,
-    "user_invite_code" TEXT NOT NULL,
     "reward_point" INTEGER NOT NULL DEFAULT 0,
     "status" "UserTaskStatus" NOT NULL DEFAULT 'init',
 
-    CONSTRAINT "UserTask_pkey" PRIMARY KEY ("task_id","user_telegram_id","user_invite_code")
+    CONSTRAINT "UserTask_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable

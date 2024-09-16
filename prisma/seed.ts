@@ -71,16 +71,16 @@ async function main() {
   // Seed TaskCategory table
   await prisma.taskCategory.createMany({
     data: [
-      { id: 'cat1', name: 'Social Media', minute_wait: 15, social: 'Facebook' },
+      { id: 'cat1', name: 'Social Media', seconds_wait: 15, social: 'Facebook' },
       {
         id: 'cat2',
         name: 'Coding Challenges',
-        minute_wait: 30,
+        seconds_wait: 30,
         social: 'GitHub',
       },
-      { id: 'cat3', name: 'Learning Modules', minute_wait: 60 },
-      { id: 'cat4', name: 'Marketing', minute_wait: 20, social: 'Instagram' },
-      { id: 'cat5', name: 'Support Tasks', minute_wait: 40 },
+      { id: 'cat3', name: 'Learning Modules', seconds_wait: 60 },
+      { id: 'cat4', name: 'Marketing', seconds_wait: 20, social: 'Instagram' },
+      { id: 'cat5', name: 'Support Tasks', seconds_wait: 40 },
     ],
   });
 
@@ -176,70 +176,60 @@ async function main() {
       {
         task_id: 'task1',
         user_telegram_id: '1001',
-        user_invite_code: 'INV123',
         reward_point: 50,
         status: 'claimed',
       },
       {
         task_id: 'task2',
         user_telegram_id: '1002',
-        user_invite_code: 'INV456',
         reward_point: 100,
         status: 'ready',
       },
       {
         task_id: 'task3',
         user_telegram_id: '1003',
-        user_invite_code: 'INV789',
         reward_point: 150,
         status: 'init',
       },
       {
         task_id: 'task4',
         user_telegram_id: '1004',
-        user_invite_code: 'INV101',
         reward_point: 50,
         status: 'claimed',
       },
       {
         task_id: 'task5',
         user_telegram_id: '1005',
-        user_invite_code: 'INV202',
         reward_point: 30,
         status: 'ready',
       },
       {
         task_id: 'task6',
         user_telegram_id: '1006',
-        user_invite_code: 'INV303',
         reward_point: 120,
         status: 'claimed',
       },
       {
         task_id: 'task7',
         user_telegram_id: '1007',
-        user_invite_code: 'INV404',
         reward_point: 40,
         status: 'init',
       },
       {
         task_id: 'task8',
         user_telegram_id: '1008',
-        user_invite_code: 'INV505',
         reward_point: 90,
         status: 'ready',
       },
       {
         task_id: 'task9',
         user_telegram_id: '1009',
-        user_invite_code: 'INV606',
         reward_point: 80,
         status: 'claimed',
       },
       {
         task_id: 'task10',
         user_telegram_id: '1010',
-        user_invite_code: 'INV707',
         reward_point: 110,
         status: 'ready',
       },

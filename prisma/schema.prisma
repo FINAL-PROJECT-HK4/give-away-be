@@ -27,7 +27,7 @@ enum UserTaskStatus {
 model TaskCategory {
   id           String   @id @default(cuid())
   name         String
-  minute_wait  Int
+  seconds_wait  Int
   social       String?
   create_at    DateTime   @default(now()) @map("create_at")
   update_at    DateTime   @default(now()) @map("create_update")
@@ -47,15 +47,13 @@ model Task {
 }
 
 model UserTask {
+  id                String   @id @default(cuid())
   task_id        String
   user_telegram_id String
-  user_invite_code String
   reward_point    Int           @default(0)
   status         UserTaskStatus @default(init)
   task           Task           @relation(fields: [task_id], references: [id])
   user           User           @relation(fields: [user_telegram_id], references: [telegram_id])
-
-  @@id([task_id, user_telegram_id, user_invite_code])
 }
 
 model User {

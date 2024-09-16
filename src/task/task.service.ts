@@ -45,29 +45,63 @@ export class TaskService {
     return tasksStatus;
   }
 
-  async claimTask(telegramId: string, taskId: string) {
-    await this.ensureUserExists(telegramId);
+  async startTask(telegramId: string, taskId: string, point: number) {
+    try {
+      await this.ensureUserExists(telegramId);
 
-    const response = await this.prisma.userTask.updateMany({
-      where: {
-        user_telegram_id: telegramId,
-        task_id: taskId,
-      },
-      data: {
-        status: 'claimed',
-      },
-    });
+      const result = await this.prisma.userTask.create({
+        data: {
+          user_telegram_id: telegramId,
+          task_id: taskId,
+          reward_point: point,
+          status: 'ready',
+        },
+      });
 
-    console.log(response, 'chaubui22');
-
-    if (response.count === 0) {
       return {
-        isUpdated: false,
+        isCreate: true,
+        data: result,
+      };
+    } catch (error) {
+      console.error('Error starting task:', error);
+      return {
+        isCreate: false,
+        message: `Error creating task: ${error.message}`,
       };
     }
+  }
 
-    return {
-      isUpdated: true,
-    };
+  async claimTask(telegramId: string, taskId: string) {
+    try {
+      await this.ensureUserExists(telegramId);
+
+      const response = await this.prisma.userTask.updateMany({
+        where: {
+          user_telegram_id: telegramId,
+          task_id: taskId,
+        },
+        data: {
+          status: 'claimed',
+        },
+      });
+
+      if (response.count === 0) {
+        return {
+          isUpdated: false,
+          message: 'No tasks were updated.',
+        };
+      }
+
+      return {
+        isUpdated: true,
+        message: 'Task status updated successfully!',
+      };
+    } catch (error) {
+      console.error('Error claiming task:', error);
+      return {
+        isUpdated: false,
+        message: `Error updating task status: ${error.message}`,
+      };
+    }
   }
 }
