@@ -1,43 +1,36 @@
-###################
-# BUILD FOR LOCAL DEVELOPMENT
-###################
+FROM node:18-alpine as builder
 
-FROM node:20-alpine AS development
-WORKDIR /usr/src/app
-COPY --chown=node:node package.json yarn.lock ./
-RUN yarn install
-COPY --chown=node:node . .
-USER node
+WORKDIR /app
+COPY ./package.json ./yarn.lock ./
 
+RUN yarn config set network-timeout 600000 -g && yarn
+COPY ./src ./src
+COPY ./nest-cli.json ./nest-cli.json
+COPY ./tsconfig.json ./tsconfig.json
+COPY ./tsconfig.build.json ./tsconfig.build.json
+RUN yarn build
 
-###################
-# BUILD FOR PRODUCTION  
-###################
+FROM node:18-alpine as modules
 
-FROM node:20-alpine AS build
-WORKDIR /usr/src/app
-COPY --chown=node:node package.json yarn.lock prisma ./
-COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules  
-COPY --chown=node:node . .
-# RUN npx prisma migrate dev
-# RUN npx prisma migrate deploy
-# Run the build command which creates the production bundle
-RUN yarn run build
-# Set NODE_ENV environment variable
-ENV NODE_ENV production 
-RUN yarn install --production --frozen-lockfile
-USER node
+WORKDIR /app
+COPY ./package.json ./yarn.lock ./
+RUN yarn config set network-timeout 600000 -g && yarn install --production
+COPY ./prisma ./prisma
+RUN yarn prisma generate
 
-###################
-# PRODUCTION
-###################
+FROM node:18-alpine as runner
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
 
-FROM node:20-alpine AS production
-WORKDIR /usr/src/app
-# Copy the bundled code from the build stage to the production image
-COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node --from=build /usr/src/app/dist ./dist
-# CMD [ "npx prisma migrate deploy " ]
+WORKDIR /app
+COPY ./package.json ./yarn.lock ./
+COPY ./prisma ./prisma
+COPY --from=modules /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
 
-# Start the server using the production build
-CMD [ "node", "dist/main.js" ]
+ENV PATH /app/node_modules/.bin:$PATH
+RUN chown -R 1001:1001 /app
+
+USER 1001
+
+CMD ["node", "dist/main"]
