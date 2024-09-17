@@ -12,10 +12,12 @@ import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtMiddleware } from './common/middleware/jwt.middleware';
 import { TaskController } from './task/task.controller';
+import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [CommonModule, TaskModule, AuthModule],
-  controllers: [AppController],
+  imports: [CommonModule, TaskModule, AuthModule, UserModule],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
