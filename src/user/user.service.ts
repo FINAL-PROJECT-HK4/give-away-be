@@ -6,8 +6,17 @@ export class UserService {
   constructor(readonly prisma: PrismaService) {}
 
   async getUserById(userId: string) {
-    return this.prisma.user.findUnique({
+    return await this.prisma.user.findUnique({
       where: { telegram_id: userId },
+    });
+  }
+
+  async getFriendByUserId(userId: string) {
+    return await this.prisma.referralInvitations.findMany({
+      where: { invited_user: userId },
+      include: {
+        user: true,
+      },
     });
   }
 }
