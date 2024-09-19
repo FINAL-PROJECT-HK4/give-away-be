@@ -7,8 +7,12 @@ export class UserController {
 
   @Get('/:userId')
   async getUser(@Param('userId') telegramId: string) {
-    console.log('hhhhhh', telegramId);
-    const result = this.userService.getUserById(telegramId);
+    return await this.userService.getUserById(telegramId);
+  }
+
+  @Get('friends/:userId')
+  async getFriend(@Param('userId') telegramId: string) {
+    const result = await this.userService.getFriendByUserId(telegramId);
     return result;
   }
 }
