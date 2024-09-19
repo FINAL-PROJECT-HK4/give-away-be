@@ -93,6 +93,7 @@ async function main() {
         reward_point: 50,
         status: 'active',
         id_task_category: 'cat1',
+        link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -101,6 +102,7 @@ async function main() {
         reward_point: 100,
         status: 'active',
         id_task_category: 'cat2',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -109,6 +111,7 @@ async function main() {
         reward_point: 150,
         status: 'inactive',
         id_task_category: 'cat3',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -117,6 +120,7 @@ async function main() {
         reward_point: 50,
         status: 'active',
         id_task_category: 'cat1',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -125,6 +129,7 @@ async function main() {
         reward_point: 30,
         status: 'active',
         id_task_category: 'cat4',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -133,6 +138,7 @@ async function main() {
         reward_point: 120,
         status: 'active',
         id_task_category: 'cat5',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -141,6 +147,7 @@ async function main() {
         reward_point: 40,
         status: 'inactive',
         id_task_category: 'cat1',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -149,6 +156,7 @@ async function main() {
         reward_point: 90,
         status: 'active',
         id_task_category: 'cat2',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -157,6 +165,7 @@ async function main() {
         reward_point: 80,
         status: 'active',
         id_task_category: 'cat3',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -165,6 +174,7 @@ async function main() {
         reward_point: 110,
         status: 'inactive',
         id_task_category: 'cat5',
+         link: "https://web.telegram.org/a/#7279624956",
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
     ],

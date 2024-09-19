@@ -49,18 +49,15 @@ export class TaskService {
     try {
       await this.ensureUserExists(telegramId);
 
-      const result = await this.prisma.userTask.create({
-        data: {
-          user_telegram_id: telegramId,
-          task_id: taskId,
-          reward_point: point,
-          status: 'ready',
-        },
-      });
+      const result = await this.prisma.$queryRaw`
+        SELECT * FROM start_task(${telegramId}::VARCHAR(255), ${taskId}::VARCHAR(255), ${point}::INTEGER)`;
+
+      const taskResult = result[0];
 
       return {
-        isCreate: true,
-        data: result,
+        isCreate: taskResult.is_create,
+        message: taskResult.message,
+        existingTaskId: taskResult.existing_task_id,
       };
     } catch (error) {
       console.error('Error starting task:', error);
@@ -71,37 +68,60 @@ export class TaskService {
     }
   }
 
+  // async claimTask(telegramId: string, taskId: string) {
+  //   try {
+  //     await this.ensureUserExists(telegramId);
+
+  //     const response = await this.prisma.userTask.updateMany({
+  //       where: {
+  //         user_telegram_id: telegramId,
+  //         task_id: taskId,
+  //       },
+  //       data: {
+  //         status: 'claimed',
+  //       },
+  //     });
+
+  //     if (response.count === 0) {
+  //       return {
+  //         isUpdated: false,
+  //         message: 'No tasks were updated.',
+  //       };
+  //     }
+
+  //     return {
+  //       isUpdated: true,
+  //       message: 'Task status updated successfully!',
+  //     };
+  //   } catch (error) {
+  //     console.error('Error claiming task:', error);
+  //     return {
+  //       isUpdated: false,
+  //       message: `Error updating task status: ${error.message}`,
+  //     };
+  //   }
+  // }
+
   async claimTask(telegramId: string, taskId: string) {
     try {
-      await this.ensureUserExists(telegramId);
+        await this.ensureUserExists(telegramId);
 
-      const response = await this.prisma.userTask.updateMany({
-        where: {
-          user_telegram_id: telegramId,
-          task_id: taskId,
-        },
-        data: {
-          status: 'claimed',
-        },
-      });
+        const result = await this.prisma.$queryRaw`
+            SELECT * FROM claim_task(${telegramId}::VARCHAR(255), ${taskId}::VARCHAR(255))`;
 
-      if (response.count === 0) {
+        const taskResult = result[0];
+
         return {
-          isUpdated: false,
-          message: 'No tasks were updated.',
+            isUpdated: taskResult.is_updated,
+            message: taskResult.message,
         };
-      }
-
-      return {
-        isUpdated: true,
-        message: 'Task status updated successfully!',
-      };
     } catch (error) {
-      console.error('Error claiming task:', error);
-      return {
-        isUpdated: false,
-        message: `Error updating task status: ${error.message}`,
-      };
+        console.error('Error claiming task:', error);
+        return {
+            isUpdated: false,
+            message: `Error claiming task: ${error.message}`,
+        };
     }
-  }
+}
+
 }

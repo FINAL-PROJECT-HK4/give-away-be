@@ -27,42 +27,45 @@ enum UserTaskStatus {
 model TaskCategory {
   id           String   @id @default(cuid())
   name         String
-  seconds_wait  Int
+  seconds_wait Int
   social       String?
-  create_at    DateTime   @default(now()) @map("create_at")
-  update_at    DateTime   @default(now()) @map("create_update")
+  create_at    DateTime @default(now()) @map("create_at")
+  update_at    DateTime @default(now()) @map("create_update")
   tasks        Task[]
 }
 
 model Task {
-  id                String   @id @default(cuid())
-  name              String
-  reward_point      Int           @default(0)
-  status            TaskStatus    @default(active)
-  icon              String
-  id_task_category  String     
-  create_at         DateTime      @default(now())
-  task_category     TaskCategory  @relation(fields: [id_task_category], references: [id])
-  user_tasks        UserTask[]
+  id               String       @id @default(cuid())
+  name             String
+  reward_point     Int          @default(0)
+  status           TaskStatus   @default(active)
+  icon             String
+  id_task_category String
+  create_at        DateTime     @default(now())
+  task_category    TaskCategory @relation(fields: [id_task_category], references: [id])
+  user_tasks       UserTask[]
+  link             String
 }
 
 model UserTask {
-  id                String   @id @default(cuid())
-  task_id        String
+  id               String         @id @default(cuid())
+  task_id          String
   user_telegram_id String
-  reward_point    Int           @default(0)
-  status         UserTaskStatus @default(init)
-  task           Task           @relation(fields: [task_id], references: [id])
-  user           User           @relation(fields: [user_telegram_id], references: [telegram_id])
+  reward_point     Int            @default(0)
+  status           UserTaskStatus @default(init)
+  task             Task           @relation(fields: [task_id], references: [id])
+  user             User           @relation(fields: [user_telegram_id], references: [telegram_id])
+
+  @@unique([user_telegram_id, task_id])
 }
 
 model User {
-  telegram_id   String   @id
-  user_name     String
-  invite_code    String @unique
-  reward_point   Int          @default(0)
-  user_tasks    UserTask[]
-  daily_checkin DailyCheckin?
+  telegram_id          String                @id
+  user_name            String
+  invite_code          String                @unique
+  reward_point         Int                   @default(0)
+  user_tasks           UserTask[]
+  daily_checkin        DailyCheckin?
   referral_invitations ReferralInvitations[]
 }
 
@@ -74,17 +77,17 @@ model ReferralInvitations {
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
 
-  user         User     @relation(fields: [user_id], references: [telegram_id]) 
+  user User @relation(fields: [user_id], references: [telegram_id])
 }
 
 model DailyCheckin {
-  id               String   @id @default(uuid())
-  user_id          String   @unique
-  checkin_date     DateTime
-  consecutive_days Int      @default(1)
-  reward_points    Int      @default(0)
+  id                String    @id @default(uuid())
+  user_id           String    @unique
+  checkin_date      DateTime
+  consecutive_days  Int       @default(1)
+  reward_points     Int       @default(0)
   last_checkin_date DateTime?
-  user User @relation(fields: [user_id], references: [telegram_id])
+  user              User      @relation(fields: [user_id], references: [telegram_id])
 
   @@index([user_id, checkin_date], name: "checkin_index")
 }
