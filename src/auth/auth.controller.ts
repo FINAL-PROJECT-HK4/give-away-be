@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 
 interface initData {
   queryId: string;
-  inviteCode: string | null;
+  invitedCode: string | null;
 }
 
 interface RefreshTokenProps {
@@ -16,9 +16,8 @@ export class AuthController {
 
   @Post('login')
   async authenticate(@Body() data: initData) {
-    const { queryId, inviteCode } = data;
-
-    return this.authService.handleLogin(queryId, inviteCode);
+    const { queryId, invitedCode } = data;
+    return this.authService.handleLogin(queryId, invitedCode);
   }
 
   @Post('refresh-token')

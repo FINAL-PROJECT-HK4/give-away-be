@@ -90,8 +90,8 @@ export class AuthService {
     if (invitedCode) {
       const userByInvitedCode = await this.getUserByInviteCode(invitedCode);
       await this.createReferralInvitations(
-        telegramId.toString(),
         userByInvitedCode.telegram_id,
+        telegramId.toString(),
         invitedCode,
       );
     }

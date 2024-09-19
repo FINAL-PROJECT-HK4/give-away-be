@@ -71,7 +71,12 @@ async function main() {
   // Seed TaskCategory table
   await prisma.taskCategory.createMany({
     data: [
-      { id: 'cat1', name: 'Social Media', seconds_wait: 15, social: 'Facebook' },
+      {
+        id: 'cat1',
+        name: 'Social Media',
+        seconds_wait: 15,
+        social: 'Facebook',
+      },
       {
         id: 'cat2',
         name: 'Coding Challenges',
@@ -93,7 +98,7 @@ async function main() {
         reward_point: 50,
         status: 'active',
         id_task_category: 'cat1',
-        link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -102,7 +107,7 @@ async function main() {
         reward_point: 100,
         status: 'active',
         id_task_category: 'cat2',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -111,7 +116,7 @@ async function main() {
         reward_point: 150,
         status: 'inactive',
         id_task_category: 'cat3',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -120,7 +125,7 @@ async function main() {
         reward_point: 50,
         status: 'active',
         id_task_category: 'cat1',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -129,7 +134,7 @@ async function main() {
         reward_point: 30,
         status: 'active',
         id_task_category: 'cat4',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -138,7 +143,7 @@ async function main() {
         reward_point: 120,
         status: 'active',
         id_task_category: 'cat5',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -147,7 +152,7 @@ async function main() {
         reward_point: 40,
         status: 'inactive',
         id_task_category: 'cat1',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -156,7 +161,7 @@ async function main() {
         reward_point: 90,
         status: 'active',
         id_task_category: 'cat2',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -165,7 +170,7 @@ async function main() {
         reward_point: 80,
         status: 'active',
         id_task_category: 'cat3',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
       {
@@ -174,7 +179,7 @@ async function main() {
         reward_point: 110,
         status: 'inactive',
         id_task_category: 'cat5',
-         link: "https://web.telegram.org/a/#7279624956",
+        link: 'https://web.telegram.org/a/#7279624956',
         icon: 'https://res.cloudinary.com/doguzyfn7/image/upload/v1726214777/icons8-telegram-50_zpupai.png',
       },
     ],
@@ -249,9 +254,9 @@ async function main() {
   // Seed ReferralInvitations table
   await prisma.referralInvitations.createMany({
     data: [
-      { user_id: '1001', invited_user: '1003', invite_code: 'INV123' },
-      { user_id: '1002', invited_user: '1004', invite_code: 'INV456' },
-      { user_id: '1003', invited_user: '1005', invite_code: 'INV789' },
+      { user_id: '1001', invited_user: '1002', invite_code: 'INV123' },
+      { user_id: '1002', invited_user: '1003', invite_code: 'INV456' },
+      { user_id: '1003', invited_user: '1004', invite_code: 'INV789' },
       // { user_id: '1004', invited_user: 'friend4', invite_code: 'INV101' },
       // { user_id: '1005', invited_user: 'friend5', invite_code: 'INV202' },
       // { user_id: '1006', invited_user: 'friend6', invite_code: 'INV303' },

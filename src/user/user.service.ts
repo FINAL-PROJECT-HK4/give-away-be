@@ -13,7 +13,7 @@ export class UserService {
 
   async getFriendByUserId(userId: string) {
     return await this.prisma.referralInvitations.findMany({
-      where: { invited_user: userId },
+      where: { user_id: userId },
       include: {
         user: true,
       },
