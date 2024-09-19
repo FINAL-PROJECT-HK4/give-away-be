@@ -44,7 +44,7 @@ model Task {
   create_at        DateTime     @default(now())
   task_category    TaskCategory @relation(fields: [id_task_category], references: [id])
   user_tasks       UserTask[]
-  link             String
+  link             String        @default("")
 }
 
 model UserTask {
