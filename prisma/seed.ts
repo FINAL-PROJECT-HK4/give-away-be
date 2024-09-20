@@ -249,16 +249,16 @@ async function main() {
   // Seed ReferralInvitations table
   await prisma.referralInvitations.createMany({
     data: [
-      { user_id: '1001', invited_user: 'friend1', invite_code: 'INV123' },
-      { user_id: '1002', invited_user: 'friend2', invite_code: 'INV456' },
-      { user_id: '1003', invited_user: 'friend3', invite_code: 'INV789' },
-      { user_id: '1004', invited_user: 'friend4', invite_code: 'INV101' },
-      { user_id: '1005', invited_user: 'friend5', invite_code: 'INV202' },
-      { user_id: '1006', invited_user: 'friend6', invite_code: 'INV303' },
-      { user_id: '1007', invited_user: 'friend7', invite_code: 'INV404' },
-      { user_id: '1008', invited_user: 'friend8', invite_code: 'INV505' },
-      { user_id: '1009', invited_user: 'friend9', invite_code: 'INV606' },
-      { user_id: '1010', invited_user: 'friend10', invite_code: 'INV707' },
+      { user_id: '1001', invited_user: '1003', invite_code: 'INV123' },
+      { user_id: '1002', invited_user: '1004', invite_code: 'INV456' },
+      { user_id: '1003', invited_user: '1005', invite_code: 'INV789' },
+      // { user_id: '1004', invited_user: 'friend4', invite_code: 'INV101' },
+      // { user_id: '1005', invited_user: 'friend5', invite_code: 'INV202' },
+      // { user_id: '1006', invited_user: 'friend6', invite_code: 'INV303' },
+      // { user_id: '1007', invited_user: 'friend7', invite_code: 'INV404' },
+      // { user_id: '1008', invited_user: 'friend8', invite_code: 'INV505' },
+      // { user_id: '1009', invited_user: 'friend9', invite_code: 'INV606' },
+      // { user_id: '1010', invited_user: 'friend10', invite_code: 'INV707' },
     ],
   });
 
