@@ -104,24 +104,23 @@ export class TaskService {
 
   async claimTask(telegramId: string, taskId: string) {
     try {
-        await this.ensureUserExists(telegramId);
+      await this.ensureUserExists(telegramId);
 
-        const result = await this.prisma.$queryRaw`
+      const result = await this.prisma.$queryRaw`
             SELECT * FROM claim_task(${telegramId}::VARCHAR(255), ${taskId}::VARCHAR(255))`;
 
-        const taskResult = result[0];
+      const taskResult = result[0];
 
-        return {
-            isUpdated: taskResult.is_updated,
-            message: taskResult.message,
-        };
+      return {
+        isUpdated: taskResult.is_updated,
+        message: taskResult.message,
+      };
     } catch (error) {
-        console.error('Error claiming task:', error);
-        return {
-            isUpdated: false,
-            message: `Error claiming task: ${error.message}`,
-        };
+      console.error('Error claiming task:', error);
+      return {
+        isUpdated: false,
+        message: `Error claiming task: ${error.message}`,
+      };
     }
-}
-
+  }
 }

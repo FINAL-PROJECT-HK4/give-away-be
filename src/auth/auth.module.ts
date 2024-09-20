@@ -5,6 +5,8 @@ import { AuthController } from './auth.controller';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { InvitationService } from './invitation.service';
+import { AuthGuard } from './auth.guard';
+// import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -17,8 +19,8 @@ import { InvitationService } from './invitation.service';
       }),
     }),
   ],
-  providers: [AuthService, PrismaService, InvitationService],
+  providers: [AuthService, PrismaService, InvitationService, AuthGuard],
   controllers: [AuthController],
-  exports: [AuthService, JwtModule],
+  exports: [AuthService, JwtModule, AuthGuard],
 })
 export class AuthModule {}
