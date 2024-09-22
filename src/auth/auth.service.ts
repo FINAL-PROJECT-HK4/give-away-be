@@ -149,12 +149,13 @@ export class AuthService {
     const { telegram_id: telegramId, user_name: username } = userInDb;
     const payload = { telegramId, username };
 
-    const accessToken = this.jwtService.sign({
+    const accessToken = this.jwtService.sign(payload, {
+      // secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
       expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRES_IN'),
     });
 
     const refreshToken = this.jwtService.sign(payload, {
-      secret: this.configService.get<string>('jwtRefreshSecret'),
+      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
       expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRES_IN'),
     });
 
@@ -164,7 +165,7 @@ export class AuthService {
   async refresh(refreshToken: string) {
     try {
       const payload = await this.jwtService.verifyAsync(refreshToken, {
-        secret: this.configService.get<string>('jwtRefreshSecret'),
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
       });
 
       const { accessToken, refreshToken: newRefreshToken } =

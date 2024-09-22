@@ -14,10 +14,18 @@ import { JwtMiddleware } from './common/middleware/jwt.middleware';
 import { TaskController } from './task/task.controller';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
+import { DailycheckinModule } from './dailycheckin/dailycheckin.module';
+import { DailycheckinController } from './dailycheckin/dailycheckin.controller';
 
 @Module({
-  imports: [CommonModule, TaskModule, AuthModule, UserModule],
-  controllers: [AppController, UserController],
+  imports: [
+    CommonModule,
+    TaskModule,
+    AuthModule,
+    UserModule,
+    DailycheckinModule,
+  ],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
@@ -28,6 +36,6 @@ export class AppModule implements NestModule {
         { path: 'auth/login', method: RequestMethod.POST },
         { path: 'auth/register', method: RequestMethod.POST },
       )
-      .forRoutes(TaskController);
+      .forRoutes(TaskController, UserController, DailycheckinController);
   }
 }
