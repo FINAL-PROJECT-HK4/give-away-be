@@ -16,6 +16,7 @@ export class AuthController {
 
   @Post('login')
   async authenticate(@Body() data: initData) {
+  
     const { queryId, invitedCode } = data;
     return this.authService.handleLogin(queryId, invitedCode);
   }

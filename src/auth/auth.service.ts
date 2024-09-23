@@ -129,6 +129,7 @@ export class AuthService {
   }
 
   public async handleLogin(data, inviteCode) {
+    
     const { user, isValid } = await this.verifyTelegramAuth(data);
     if (!isValid) {
       throw new UnauthorizedException('Invalid hash');
@@ -149,14 +150,15 @@ export class AuthService {
     const { telegram_id: telegramId, user_name: username } = userInDb;
     const payload = { telegramId, username };
 
+  
+
     const accessToken = this.jwtService.sign(payload, {
-      // secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRES_IN'),
+      expiresIn: this.configService.get<string>('jwtExpiresIn'),
     });
 
     const refreshToken = this.jwtService.sign(payload, {
-      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRES_IN'),
+      secret: this.configService.get<string>('jwtRefreshSecret'),
+      expiresIn: this.configService.get<string>('jwtRefreshExpiresIn'),
     });
 
     return { accessToken, refreshToken };
@@ -165,7 +167,7 @@ export class AuthService {
   async refresh(refreshToken: string) {
     try {
       const payload = await this.jwtService.verifyAsync(refreshToken, {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        secret: this.configService.get<string>('jwtRefreshSecret'),
       });
 
       const { accessToken, refreshToken: newRefreshToken } =
