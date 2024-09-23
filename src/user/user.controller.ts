@@ -8,7 +8,10 @@ export class UserController {
   @Get()
   async getUser(@Req() req: any) {
     const telegramId = req.user.telegramId;
-    return await this.userService.getUserById(telegramId);
+    console.log('telegram', telegramId);
+    const result = await this.userService.getUserById(telegramId);
+    console.log('result', result);
+    return result;
   }
 
   @Get('friends')
