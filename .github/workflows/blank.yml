@@ -35,7 +35,7 @@ jobs:
           envs: DOCKERHUB_USERNAME,DOCKERHUB_PASSWORD
           script: |
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-            cd be-telegram-app
+            cd git/be-telegram-app
             docker pull anhlongwin1901/be-telegram-app:latest
             docker compose -f docker-compose.yaml up -d --build
             docker logout
