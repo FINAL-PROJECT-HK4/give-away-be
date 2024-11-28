@@ -16,11 +16,10 @@ export class AuthController {
 
   @Post('login')
   async authenticate(@Body() data: initData) {
-  
     const { queryId, invitedCode } = data;
     return this.authService.handleLogin(queryId, invitedCode);
   }
-
+        
   @Post('refresh-token')
   async refreshToken(@Body() data: RefreshTokenProps) {
     const refreshToken = data.refreshToken;

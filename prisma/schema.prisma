@@ -64,6 +64,7 @@ model User {
   user_name            String
   invite_code          String                @unique
   reward_point         Int                   @default(0)
+  ticket               Int                   @default(0)
   is_linked            Boolean               @default(false)
   user_tasks           UserTask[]
   daily_checkin        DailyCheckin?

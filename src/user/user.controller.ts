@@ -19,4 +19,10 @@ export class UserController {
     const telegramId = req.user.telegramId;
     return await this.userService.getFriendByUserId(telegramId);
   }
+
+  @Get('spin')
+  async handleSpin(@Req() req: any) {
+    const telegramId = req.user.telegramId;
+    return await this.userService.spinGame(telegramId);
+  }
 }

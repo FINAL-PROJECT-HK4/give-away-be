@@ -24,16 +24,18 @@ BEGIN
         added_points := 10;
         new_consecutive_days := 1;
 
+        -- Thêm mới bản ghi check-in
         INSERT INTO "DailyCheckin" (id, user_id, checkin_date, consecutive_days, reward_points, last_checkin_date)
         VALUES (gen_random_uuid(), input_user_id, today, new_consecutive_days, added_points, today);
 
         -- Cộng điểm cho người dùng
         UPDATE "User"
-        SET reward_point = reward_point + added_points
+        SET reward_point = reward_point + added_points,
+            ticket = ticket + 1  -- Cộng 1 ticket mỗi khi check-in thành công
         WHERE telegram_id = input_user_id;
 
         -- Trả về kết quả sau khi thêm mới
-        RETURN json_build_object('consecutive_days', new_consecutive_days, 'reward_points', added_points);
+        RETURN json_build_object('consecutive_days', new_consecutive_days, 'reward_points', added_points, 'ticket', 1);
 
     ELSE
         -- Kiểm tra nếu check-in liên tục
@@ -46,6 +48,7 @@ BEGIN
                                 ELSE new_consecutive_days * 10
                             END;
 
+            -- Cập nhật check-in và điểm thưởng
             UPDATE "DailyCheckin"
             SET consecutive_days = new_consecutive_days,
                 reward_points = reward_points + added_points,
@@ -58,6 +61,7 @@ BEGIN
             new_consecutive_days := 1;
             added_points := 10;
 
+            -- Cập nhật lại check-in
             UPDATE "DailyCheckin"
             SET consecutive_days = new_consecutive_days,
                 reward_points = reward_points + added_points,
@@ -66,15 +70,17 @@ BEGIN
             WHERE "DailyCheckin".user_id = input_user_id;
         END IF;
 
-        -- Cộng điểm cho người dùng
+        -- Cộng điểm và thêm ticket cho người dùng
         UPDATE "User"
-        SET reward_point = reward_point + added_points
+        SET reward_point = reward_point + added_points,
+            ticket = ticket + 1  -- Cộng 1 ticket mỗi khi check-in thành công
         WHERE telegram_id = input_user_id;
 
         -- Trả về kết quả sau khi cập nhật
         RETURN json_build_object(
           'consecutive_days', new_consecutive_days,
-          'reward_points', added_points
+          'reward_points', added_points,
+          'ticket', 1  -- Trả về số lượng ticket đã cộng
         );
     END IF;
 

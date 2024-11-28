@@ -31,6 +31,8 @@ export class DailycheckinService {
       const result = await this.prisma
         .$queryRaw`SELECT handle_daily_checkin(${userId});`;
 
+      console.log("result::", result);
+      
       return result;
     } catch (error) {
       console.error('Error during daily check-in:', error);
